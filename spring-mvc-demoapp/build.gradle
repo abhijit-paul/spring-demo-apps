@@ -1,0 +1,57 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.3.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+
+group = 'com.example.demoapp.demo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+bootWar {
+	manifest {
+		attributes 'Main-Class': 'com.example.demoapp.demo.DemoApplication'
+	}
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+	compile('org.springframework.boot:spring-boot-starter-jersey')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-webflux')
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	compile('javax.servlet:jstl')
+	compile('mysql:mysql-connector-java:5.1.6')
+
+	compile('javax.persistence:persistence-api:1.0.2')
+
+	compile('org.springframework.session:spring-session-core')
+	compile('org.springframework:spring-tx:5.0.7.RELEASE')
+	compile('org.springframework:spring-orm:5.0.7.RELEASE')
+	compile('org.springframework:spring-jdbc:5.0.7.RELEASE')
+
+	runtime('org.springframework.boot:spring-boot-devtools')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	providedRuntime('org.apache.tomcat.embed:tomcat-embed-jasper')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('io.projectreactor:reactor-test')
+}

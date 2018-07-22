@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:coachPersonnels.properties" />
+
+    <bean id="augmentedSkill"
+            class="com.example.demoapp.demo.AugmentedSkill" scope="prototype">
+        <!-- The empty valued constructor can be initialized by parameters to getBean call
+        only for prototype scoped beans -->
+        <constructor-arg name="skillDescription" value="" />
+    </bean>
+
+    <!-- Default scope=singleton -->
+    <!-- Additional ones are
+        prototype, : Everytime a new object will be created.
+            A KEY difference with rest of the scopes: Spring does not call the destroy method
+                because it does not manage the complete life-cycle of the prototype scoped beans.
+            The client calling the bean instantiation must take care of destroying any expensive
+            resources it may be holding.
+        request, : Lifetime for a request
+        session, : Lifetime for a session
+        global-session : Scoped application wide.
+            Same as session for servlet based application.
+            But varies for portlet based ones. Same bean can be shared by all portlets;
+                Portlets have scope/lifetime of a session
+    -->
+    <bean id="pitchingSkill"
+        class="com.example.demoapp.demo.PitchingSkill">
+    </bean>
+
+    <bean id="hittingSkill"
+        class="com.example.demoapp.demo.HittingSkill">
+    </bean>
+
+    <bean id="baseballCoach"
+    	    class="com.example.demoapp.demo.BaseballCoach">
+        <constructor-arg ref="pitchingSkill" />
+        <property name="additionalSkill" ref="hittingSkill" />
+        <property name="dailyWorkout" value="Spend 30 minutes on pitching practice" />
+    </bean>
+
+    <bean id="bowlingSkill"
+        class="com.example.demoapp.demo.BowlingSkill">
+    </bean>
+    <bean id="battingSkill"
+        class="com.example.demoapp.demo.BattingSkill">
+    </bean>
+
+    <bean id="cricketCoachPersonnel"
+            class="com.example.demoapp.demo.CoachPersonnel">
+        <property name="name" value="${cricketcoach.name}" />
+        <property name="houseNumber" value="${cricketcoach.houseNumber}" />
+        <property name="houseStreet" value="${cricketcoach.houseStreet}" />
+    </bean>
+
+    <bean id="cricketCoach"
+            class="com.example.demoapp.demo.CricketCoach"
+            init-method="printStartTime"
+            destroy-method="printClosingTime">
+        <constructor-arg ref="bowlingSkill" />
+        <property name="additionalSkill" ref="battingSkill" />
+        <property name="dailyWorkout" value="Run 5 kms at 8km/h" />
+        <property name="coachPersonnel" ref="cricketCoachPersonnel" />
+    </bean>
+
+    <bean id="forehandSkill"
+            class="com.example.demoapp.demo.ForehandSkill">
+        <property name="handedness" value="right" />
+    </bean>
+
+    <bean id="tennisCoachPersonnel"
+            class="com.example.demoapp.demo.CoachPersonnel">
+        <property name="name" value="${tenniscoach.name}" />
+        <property name="houseNumber" value="${tenniscoach.houseNumber}" />
+        <property name="houseStreet" value="${tenniscoach.houseStreet}" />
+    </bean>
+
+    <bean id="tennisCoach"
+            class="com.example.demoapp.demo.TennisCoach">
+        <constructor-arg ref="forehandSkill" />
+        <property name="dailyWorkout" value="Do 10 Bench split squats" />
+        <property name="coachPersonnel" ref="tennisCoachPersonnel" />
+    </bean>
+</beans>
