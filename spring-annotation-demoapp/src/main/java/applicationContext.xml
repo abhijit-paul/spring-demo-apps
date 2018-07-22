@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.example.demoapp.demo" />
+
+    <context:property-placeholder location="classpath:coachPersonnels.properties" />
+
+    <!-- Default scope=singleton -->
+    <!-- Additional ones are
+        prototype, : Everytime a new object will be created.
+            A KEY difference with rest of the scopes: Spring does not call the destroy method
+                because it does not manage the complete life-cycle of the prototype scoped beans.
+            The client calling the bean instantiation must take care of destroying any expensive
+            resources it may be holding.
+        request, : Lifetime for a request
+        session, : Lifetime for a session
+        global-session : Scoped application wide.
+            Same as session for servlet based application.
+            But varies for portlet based ones. Same bean can be shared by all portlets;
+                Portlets have scope/lifetime of a session
+    -->
+</beans>
